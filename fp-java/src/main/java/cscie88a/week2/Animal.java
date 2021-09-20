@@ -24,6 +24,11 @@ public class Animal {
 			return false;
 		}
 	}
+
+	public boolean playWithToy(Toy toy) {
+		System.out.println("I've got a toy: " + toy.name);
+		return true;
+	}
 	
 	public String getName() {
 		return name;

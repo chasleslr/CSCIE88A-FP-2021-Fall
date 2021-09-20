@@ -9,4 +9,6 @@ public interface ITrainable {
 				+ trickName + " now!");
 		return true;
 	}
+
+	public boolean singWithFriend(Animal aFriend);
 }

@@ -3,7 +3,7 @@ package cscie88a.week2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Cat3 extends Animal implements ITrainable{
+public class Cat3 extends Animal implements ITrainable, Guard {
 
 	private static final Logger logger = LoggerFactory.getLogger(Cat3.class);
 	public static String whatISay = "I don't care what you asked me to say - I say MEOW only";
@@ -31,6 +31,12 @@ public class Cat3 extends Animal implements ITrainable{
 		return false;
 	}
 
+	@Override
+	public boolean singWithFriend(Animal aFriend) {
+		logger.info("I won't do it");
+		return false;
+	}
+
 	public static String saySomething(String somethingToSay){
 		return whatISay;
 	}
@@ -40,4 +46,20 @@ public class Cat3 extends Animal implements ITrainable{
 		return "Cat [name=" + name + ", eyeColor=" + eyeColor + ", bodyColor=" + bodyColor + "]";
 	}
 
+	@Override
+	public boolean playWithToy(Toy toy) {
+		if (toy.isSqueaky()) {
+			logger.info("Looks likea mouse... I'll play");
+			toy.doFunStuff();
+			return true;
+		} else {
+			logger.info("don't feel like playing");
+			return false;
+		}
+	}
+
+	@Override
+	public boolean guardHome() {
+		return false;
+	}
 }
