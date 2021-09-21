@@ -6,13 +6,25 @@ object AdoptionService {
       isAdoptionFeePaid: Boolean
     )(
       readyForAdoptionNoArg: () => Boolean
-    ): Boolean = ???
+    ): Boolean = {
+      if (readyForAdoptionNoArg() && isAdoptionFeePaid) {
+        return true
+      } else {
+        return false
+      }
+  }: Boolean
 
   def tryToAdoptOneArg(
       healthCheckDone: Boolean,
       isAdoptionFeePaid: Boolean
     )(
       readyForAdoptionOneArg: Boolean => Boolean
-    ): Boolean = ???
+    ): Boolean = {
+    if (readyForAdoptionOneArg(healthCheckDone) && isAdoptionFeePaid) {
+      true
+    } else {
+      false
+    }
+  }
 
 }

@@ -9,22 +9,24 @@ class AdoptionServiceTest extends StandardTest {
     "adopting with no args" should {
 
       "adopt animal if animal is ready for adoption and fee paid" in {
-        false shouldBe true
+        AdoptionService.tryToAdoptNoArg(true)(() => true) shouldBe true
       }
 
       "not adopt animal if animal is not ready for adoption and fee paid" in {
-        true shouldBe true
+        !AdoptionService.tryToAdoptNoArg(true)(() => false) shouldBe true
       }
     }
 
     "adopting with one arg" should {
 
       "adopt animal if animal is not ready for adoption and fee paid" in {
-        false shouldBe true
+        val healthcheck = false
+        AdoptionService.tryToAdoptOneArg(healthcheck, true)((healthcheck) => !healthcheck) shouldBe true
       }
 
       "not adopt animal if animal is not ready for adoption and fee paid" in {
-        true shouldBe true
+        val healthcheck = false
+        !AdoptionService.tryToAdoptOneArg(healthcheck, true)((healthcheck) => healthcheck) shouldBe true
       }
     }
 
