@@ -7,16 +7,20 @@ public class Cat {
 	protected String name;
 	protected String eyeColor;
 	protected String bodyColor;
+	protected Integer age;
+	protected Boolean healthCheckDone;
 
 	public Cat() {
 		super();
 	}
 
-	public Cat(String name, String eyeColor, String bodyColor) {
+	public Cat(String name, String eyeColor, String bodyColor, Integer age, Boolean healthCheckDone) {
 		super();
 		this.name = name;
 		this.eyeColor = eyeColor;
 		this.bodyColor = bodyColor;
+		this.age = age;
+		this.healthCheckDone = healthCheckDone;
 	}
 
 	public String getName() {
@@ -41,6 +45,14 @@ public class Cat {
 
 	public void setBodyColor(String bodyColor) {
 		this.bodyColor = bodyColor;
+	}
+
+	public Boolean getHealthCheckDone() {
+		return healthCheckDone;
+	}
+
+	public void setHealthCheckDone(Boolean healthCheckDone) {
+		this.healthCheckDone = healthCheckDone;
 	}
 
 
