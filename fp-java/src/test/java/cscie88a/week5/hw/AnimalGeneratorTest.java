@@ -3,6 +3,8 @@ package cscie88a.week5.hw;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,15 +71,40 @@ class AnimalGeneratorTest {
         assertEquals(resultAnimal.getName(), "GeneratedHedgehog100");
     }
 
-    //TODO implement below methods
     @Test
     void testGenerateStreamOfAnimalsFromCollection() {
-        // TODO implement this
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(10);
+        assertEquals(10, animals.count());
+
+        Stream<StreamAnimal> animals2 = AnimalGenerator.generateStreamOfAnimalsFromCollection(25);
+        assertEquals(25, animals2.count());
     }
 
     @Test
     void testGenerateStreamOfAnimals_lambda() {
-        // TODO implement this
+        Stream<StreamAnimal> animalStream = AnimalGenerator.generateStreamOfAnimals_lambda();
+        List<StreamAnimal> animals = animalStream.limit(20).collect(Collectors.toList());
+        assertEquals(20, animals.size());
+
+        List<StreamAnimal> ageFiltered = animals
+                .stream()
+                .filter(animal -> animal.getAge() >= 0 & animal.getAge() <= 20)
+                .collect(Collectors.toList());
+
+        assert ageFiltered
+                .stream()
+                .filter(animal -> animal.getAnimalType().equals(AnimalType.CAT))
+                .count() > 0;
+
+        assert ageFiltered
+                .stream()
+                .filter(animal -> animal.getAnimalType().equals(AnimalType.DOG))
+                .count() > 0;
+
+        assert ageFiltered
+                .stream()
+                .filter(animal -> animal.getAnimalType().equals(AnimalType.HEDGEHOG))
+                .count() > 0;
     }
 
 }

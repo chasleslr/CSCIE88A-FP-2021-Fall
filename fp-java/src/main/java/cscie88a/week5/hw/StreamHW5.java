@@ -1,48 +1,91 @@
 package cscie88a.week5.hw;
 
-import java.util.List;
-import java.util.Map;
+import org.apache.kafka.common.protocol.types.Field;
+
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamHW5 {
 
+    private static List<String> characters = Arrays.asList("a", "b", "c", "d");
+
+    private static Predicate<StreamAnimal> HealthyAnimalFilter = new Predicate<StreamAnimal>() {
+        @Override
+        public boolean test(StreamAnimal streamAnimal) {
+            if (streamAnimal.isHasCurrentShots() == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
     public static Stream<StreamAnimal> checkForHealthyAnimals() {
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(20);
+        Stream<StreamAnimal> filtered = animals.filter(HealthyAnimalFilter);
+        return filtered;
     }
 
     public static Stream<StreamAnimal> checkForHealthyCats() {
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(20);
+        Stream<StreamAnimal> filtered = animals
+                .filter(HealthyAnimalFilter)
+                .filter(animal -> animal.getAnimalType().equals(AnimalType.CAT));
+        return filtered;
     }
 
     public static Stream<String> getNamesOfHealthyAnimals() {
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(20);
+        Stream<String> names = animals
+                .filter(HealthyAnimalFilter)
+                .map(animal -> animal.getName());
+        return names;
     }
 
     public static StreamAnimal getOldestAnimal() {
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(40);
+        return animals
+                .reduce((a, b) -> a.getAge() > b.getAge() ? a : b)
+                .get();
     }
 
     public static float getAverageAgeOfAnimals() {
-        // TODO implement this and return a correct value
-        return 0f;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(40);
+        return (float) animals
+                .mapToDouble(StreamAnimal::getAge)
+                .average()
+                .orElse(0);
     }
 
     public static List<String> getAnimalNamesAsList(){
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(20);
+
+        return animals
+                .map(animal -> animal.getName())
+                .collect(Collectors.toList());
     }
 
     // Bonus problem 5
     public static Map<AnimalType, Long> getAnimalCountsByType(){
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animals = AnimalGenerator.generateStreamOfAnimalsFromCollection(100);
+        return animals
+                .parallel()
+                .collect(Collectors.groupingBy(StreamAnimal::getAnimalType, Collectors.counting()));
     }
 
     // Bonus problem 6
+    public static String randomizeString(String inputString) {
+        List<Character> chars = inputString
+                .chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toList());
+
+        System.out.println(chars);
+        return "foo";
+    }
+
     public static Stream<String> getRandomizedInfiniteStream() {
         // TODO implement this and return a correct object
         return null;

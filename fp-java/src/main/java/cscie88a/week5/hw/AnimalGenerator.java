@@ -90,13 +90,12 @@ public class AnimalGenerator {
     }
 
     public static Stream<StreamAnimal> generateStreamOfAnimalsFromCollection(int numberOfAnimals){
-        // TODO implement this and return a correct object
-         return null;
+        return generateListOfAnimals(numberOfAnimals).stream();
     }
 
     public static Stream<StreamAnimal> generateStreamOfAnimals_lambda(){
-        // TODO implement this and return a correct object
-        return null;
+        Stream<StreamAnimal> animalStream = Stream.generate(AnimalGenerator::getNewAnimal);
+        return animalStream;
     }
 
 }
